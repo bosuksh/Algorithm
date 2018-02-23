@@ -1,0 +1,42 @@
+#include<stdio.h>
+
+void dfs1(int arr[26][26], int dfs[26][26],int x,int y,int n, int *cnt) {
+    int new_idx_x, new_idx_y;
+    int dx[4] = {1,0,-1,0};
+    int dy[4] = {0,1,0,-1};
+
+    for(int i = 0; i< 4; i++) {
+        new_idx_x = x+dx[i];
+        new_idx_y = y+dy[i];
+
+        if(new_idx_x >=0 && new_idx_x <n && new_idx_y >=0 && new_idx_y <n && arr[new_idx_y][new_idx_x] == 1 && dfs[new_idx_y][new_idx_x] == 0) {
+            dfs[new_idx_y][new_idx_x] = 1;
+            (*cnt)++;
+            dfs1(arr,dfs,new_idx_x,new_idx_y,n,cnt);
+        }
+    }
+}
+int main() {
+
+    int n; 
+    int arr[26][26];
+    int dfs[26][26]= {0, };   
+    int cnt = 0;
+
+    scanf("%d",&n);
+
+    for(int i= 0; i< n; i++) 
+        for(int j= 0;j< n; j++)
+           scanf("%d",&arr[i][j]);
+
+    printf("잘 입력됨\n");
+    for(int i = 0; i< n; i++) {
+        for(int j = 0; j< n ; j++){
+            if(arr[i][j] == 1 && dfs[i][j] == 0) {
+                dfs1(arr,dfs,j,i,n,&cnt);
+                printf("%d\n",cnt);
+            }
+        }
+    }
+    return 0;
+}
